@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Practica 2: Javier Linde</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="../libs/jquery.js"></script>
+
+    <script type="importmap">
+          { "imports": { "three": "../libs/three.module.js" } }
+    </script>
+
+    <script type="module" src="./MyScene.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #sum-icon {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+            cursor: pointer;
+            color: white;
+        }
+
+        #dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .dialog-text {
+            margin: 20px;
+            color: white;
+            font-size: 24px;
+            text-align: right;
+        }
+
+        .dialog-end-text {
+            margin: 20px;
+            color: white;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        #clock_dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: flex-end;
+            justify-content: flex-end;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        #fusible_dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: flex-end;
+            justify-content: flex-end;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        #key_dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: flex-end;
+            justify-content: flex-end;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        #door_dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: flex-end;
+            justify-content: flex-end;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        #box_lock_dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: flex-end;
+            justify-content: flex-end;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        #took_paper_dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: flex-end;
+            justify-content: flex-end;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        #see_paper_dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        #controls_dialog {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0);
+            display: none;
+            align-items: flex-end;
+            justify-content: flex-end;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        #dialog-input {
+            margin-bottom: 10px;
+        }
+
+        #image_man{
+            width: 30%;
+        }
+
+        #final{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 1);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Div which will hold the Output -->
+    <div id="WebGL-output">
+        <div id="sum-icon">&#43;</div>
+        <div id="dialog">
+            <div class="dialog-text">
+                <p>¿Dónde estoy como he acabado aquí?</p>
+                <p>No recuerdo nada de lo que pasó ayer.</p>
+                <p>WASD para moverse, mueva la cámara con el ratón e interaccione con el entorno
+                    con click izquierdo. Presiona enter para continuar.</p>
+            </div>
+        </div>
+        <div id="clock_dialog">
+            <div class="dialog-text">
+                <p>¿Qué es este reloj? Esta vacío tal vez los engranajes que he visto por la habitación quepan.</p>
+                <p>Presiona enter para continuar.</p>
+            </div>
+        </div>
+        <div id="fusible_dialog">
+            <div class="dialog-text">
+                <p>Juraría haber visto uno de estos en la habitación.</p>
+                <p>Presiona enter para continuar.</p>
+            </div>
+        </div>
+        <div id="key_dialog">
+            <div class="dialog-text">
+                <p>¡Esta llave quizás abra la caja!</p>
+                <p>Presiona enter para continuar.</p>
+            </div>
+        </div>
+        <div id="box_lock_dialog">
+            <div class="dialog-text">
+                <p>Está cerrada parece que se puede abrir con una llave.</p>
+                <p>Presiona enter para continuar.</p>
+            </div>
+        </div>
+        <div id="door_dialog">
+            <div class="dialog-text">
+                <p>Mierda, la puerta está bloqueada aunque parece que puedo introducir una clave.</p>
+                <input id="dialog-input" type="text" placeholder="Introduce la clave">
+                <p>Presiona enter para continuar. (Si presiona click en el diálogo no podrá escribir más en el campo de la clave)</p>
+            </div>
+        </div>
+        <div id="took_paper_dialog">
+            <div class="dialog-text">
+                <p>¿Qué es esto? parece un código lo guardaré.</p>
+                <p>Presiona enter para continuar.</p>
+            </div>
+        </div>
+        <div id="see_paper_dialog">
+            <img src="../imgs/Manual.png" alt="Codigo" id="image_man">
+            <div class="dialog-text">
+                <p>Presiona enter para continuar.</p>
+            </div>
+        </div>
+        <div id="controls_dialog">
+            <div class="dialog-text">
+                <p>Presione M para ver el código.</p>
+            </div>
+        </div>
+        <div id="final">
+            <div class="dialog-end-text">
+                <p>ENHORABUENA FINALIZASTE EL JUEGO.</p>
+                <p>Trabajo realizado por Javier Linde Martínez.</p>
+                <p>Refresque la página para volver a jugar.</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
